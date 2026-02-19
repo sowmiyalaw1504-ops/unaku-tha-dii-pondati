@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Love Test ❤️</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  font-family:Segoe UI,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* Center container */
+#container{
+  width:90%;
+}
+
+/* Question center */
+h2{
+  text-shadow:0 0 10px #ff1e56;
+}
+
+/* Buttons */
+button{
+  padding:12px 25px;
+  margin:15px;
+  border:none;
+  border-radius:25px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.yes{background:#ff1e56;color:white;}
+.no{background:#333;color:white;}
+
+/* Heart rain */
+.heart{
+  position:fixed;
+  top:-10px;
+  font-size:22px;
+  animation:fall 2s linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh);}
+}
+
+/* Lightning flash */
+.flash{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:white;
+  opacity:0.8;
+  top:0;
+  left:0;
+  animation:flashAnim 0.2s;
+}
+@keyframes flashAnim{
+  from{opacity:0.9;}
+  to{opacity:0;}
+}
+
+/* Love meter */
+#meterContainer{
+  width:100%;
+  background:#333;
+  border-radius:20px;
+  margin-top:20px;
+}
+
+#meter{
+  width:0%;
+  height:25px;
+  background:#ff1e56;
+  border-radius:20px;
+  transition:1s;
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" loop>
+  <source src="mocha.mp3" type="audio/mpeg">
+</audio>
+
+<div id="container">
+<h2>Ready for Ultimate Love Test? 😌</h2>
+<button onclick="startTest()">Start</button>
+</div>
+
+<script>
+
+var music=document.getElementById("bgm");
+
+var questions=[
+"Do you love me truly? ❤️",
+"Will you stay with me always? 💞",
+"Even if we fight, will you not leave me? 😢",
+"Am I your favorite person? 😌",
+"Do you miss me when I’m silent? 🥺",
+"Will you forgive my mistakes? 🙇‍♂️",
+"Am I your happiness? 😊",
+"Will you handle my drama? 😅",
+"Do you trust me fully? 🤝",
+"Are we forever? ♾️",
+"Ennikavathu enna sight aduchurukiya? 😏",
+"Eppa nee enna Ranjini ku mela pakuriya? 😌",
+"College mudunchutu porathu kulla un veetuku kutitu poviya? 🏠",
+"Enakaga unaku romba puduchathu vittutu varuviya? 💖",
+"Naa mathika vendiya vishayam na enna solluva? 📱",
+"Pondati nu kuparathu pudikuma? 😍"
+];
+
+var index=0;
+var score=0;
+var heartInterval;
+
+function startTest(){
+  music.play();
+  showQuestion();
+}
+
+function showQuestion(){
+  clearHearts();
+
+  if(index<questions.length){
+    document.getElementById("container").innerHTML=
+    "<h2>"+questions[index]+"</h2>"+
+    "<button class='yes' onclick='answer(\"yes\")'>Yes</button>"+
+    "<button class='no' onclick='answer(\"no\")'>No</button>";
+  }else{
+    showResultPage();
+  }
+}
+
+function answer(ans){
+
+  if(ans==="yes"){
+    score++;
+    startHeartRain();
+  }else{
+    thunderEffect();
+  }
+
+  index++;
+  setTimeout(showQuestion,800);
+}
+
+/* ❤️ Controlled Heart Rain */
+function startHeartRain(){
+  heartInterval=setInterval(()=>{
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),2000);
+  },150);
+}
+
+function clearHearts(){
+  clearInterval(heartInterval);
+}
+
+/* ⚡ Thunder Effect */
+function thunderEffect(){
+  let flash=document.createElement("div");
+  flash.className="flash";
+  document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(),200);
+}
+
+/* 📊 Final Result Page */
+function showResultPage(){
+
+  let percent=Math.round((score/16)*100);
+
+  document.getElementById("container").innerHTML=
+  "<h2>Love Meter 💖</h2>"+
+  "<div id='meterContainer'><div id='meter'></div></div>"+
+  "<h3 id='percentText'></h3>";
+
+  setTimeout(()=>{
+    document.getElementById("meter").style.width=percent+"%";
+    document.getElementById("percentText").innerHTML=
+    percent+"% Love ❤️";
+  },500);
+
+  setTimeout(()=>{
+    document.getElementById("container").innerHTML+=
+    "<h2>You Are Officially My Forever Pondatii 💍😍</h2>";
+  },2000);
+}
+
+</script>
+
+</body>
+</html>
